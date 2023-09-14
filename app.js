@@ -53,7 +53,6 @@ db.query(`
 `, (err, result) => {if (err) throw err;})
 
 
-
 app.get('/employees', (req, res) => {
     db.query('SELECT * FROM employees;', (err, rows) => {
       if (err) throw err;    
@@ -62,8 +61,7 @@ app.get('/employees', (req, res) => {
   });
 
 
-
-  app.get('/employees/:id', (req, res) => {
+ app.get('/employees/:id', (req, res) => {
     const employeeId = req.params.id;
     db.query('SELECT * FROM employees WHERE id = ?', [employeeId], (err, rows) => {
     if (err) throw err;
@@ -72,29 +70,23 @@ app.get('/employees', (req, res) => {
     });
 
 
-    app.post('/user', (req, res) => {
+ app.post('/employees', (req, res) => {
         console.log("Creating the following user: ", req.body)
-        const { first_name, last_name, username, age } = req.body;
-        db.query('INSERT INTO users (first_name, last_name, username, age) VALUES (?, ?, ?, ?)', [first_name, last_name, username, age], (err, result) => {
+        const { id, title } = req.body;
+        db.query('INSERT INTO employees (id, title) VALUES (?, ?)', [id, title], (err, result) => {
         if (err) throw err;
         res.send('User added successfully');
         });
         });
 
 
-app.delete('/users/:id', (req, res) => {
+ app.delete('/employees/:id', (req, res) => {
      const userId = req.params.id;
      // Delete all user_roles with the given user_id
-     db.query('DELETE FROM user_roles WHERE user_id = ?', [userId], (err, rows) => {
+     db.query('DELETE FROM employees WHERE employee_id = ?', [employeeId], (err, rows) => {
          if (err) throw err;
          res.json(rows[0]);
         })});       
-
-
-
-
-
-
 
 
 
