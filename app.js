@@ -5,7 +5,8 @@ const mysql = require("mysql");
 const app = express();
 app.use(express.json());
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3001;  
+
 
 
 const db = mysql.createConnection({
@@ -14,6 +15,17 @@ const db = mysql.createConnection({
     password: 'Rocky246!',
     database: 'employee_db',
 })
+
+const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PW,
+    {
+      host: 'localhost',
+      dialect: 'mysql',
+      port: 3306,
+    },
+  );
 
 db.query("CREATE DATABASE IF NOT EXISTS employee_db;", (err, result) => {if (err) throw err;})
 
@@ -88,6 +100,8 @@ app.get('/employees', (req, res) => {
          res.json(rows[0]);
         })});       
 
+
+     
 
 
 app.listen(PORT,() => {
